@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DoodleRizz</title>
+</head>
+<body>
+  <h1>DoodleRizz 🎨</h1>
+
+  <button id="create">Create Room</button>
+
+  <input id="roomId" placeholder="Enter Room Code">
+  <button id="join">Join Room</button>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    document.getElementById("create").onclick = () => {
+      socket.emit("create-room");
+    };
+
+    socket.on("room-created", roomId => {
+      window.location = `/client/room.html?room=${roomId}`;
+    });
+
+    document.getElementById("join").onclick = () => {
+      const room = document.getElementById("roomId").value;
+      window.location = `/client/room.html?room=${room}`;
+    };
+  </script>
+</body>
+</html>
